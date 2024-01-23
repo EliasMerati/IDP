@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-
 builder.Services.AddAuthentication(op => 
 {
     op.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
