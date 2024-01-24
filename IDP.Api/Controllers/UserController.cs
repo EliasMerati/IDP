@@ -21,5 +21,13 @@ namespace IDP.Api.Controllers
             var result = _mediator.Send(send);
             return Ok(result);
         }
+
+        [HttpPut]
+        public IActionResult Put(UserDto user)
+        {
+            EditUserCommand send = new EditUserCommand(user);
+            var result = _mediator.Send(send);
+            return Ok(result);
+        }
     }
 }
