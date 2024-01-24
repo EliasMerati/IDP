@@ -1,14 +1,16 @@
-﻿using IDP.Application.Users.Comand;
+﻿using Dapper;
+using IDP.Application.Users.Comand;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace IDP.Api.Controllers
 {
-   [Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -22,6 +24,8 @@ namespace IDP.Api.Controllers
         {
             if (true)
             {
+
+
                 var claims = new List<Claim>
                 {
                     new Claim("UserId",Guid.NewGuid().ToString()),
