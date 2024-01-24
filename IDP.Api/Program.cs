@@ -1,3 +1,5 @@
+using IDP.Application.Users.Comand;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -30,7 +32,7 @@ builder.Services.AddAuthentication(op =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(AddUserComand).Assembly));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

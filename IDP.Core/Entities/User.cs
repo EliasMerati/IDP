@@ -22,6 +22,6 @@ namespace IDP.Core.Entities
         [MaxLength(200)]
         public string Password { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateDate { get; set; } = DateTime.Now;
     }
 }
