@@ -42,12 +42,13 @@ namespace IDP.Application.Users.Comand
                 Password = request.User.Password,
                 UserAge = request.User.UserAge,
                 UserName = request.User.UserName,
+                CreateDate = DateTime.Now,
             };
 
             var connectionstring = _configuration.GetConnectionString("IDPConnectionString");
-            var sql = "INSERT INTO USERS(FullName,UserAge,UserName,Password) VALUES (@fullname,@userage,@username,@password)";
+            var sql = "INSERT INTO USERS(FullName,UserAge,UserName,Password,CreateDate) VALUES (@fullname,@userage,@username,@password , @createdate)";
             var con = new SqlConnection(connectionstring);
-            con.Execute(sql, new { user.FullName, user.UserAge, user.UserName, user.Password });
+            con.Execute(sql, new { user.FullName, user.UserAge, user.UserName, user.Password , user.CreateDate });
             return await Task.FromResult(new AddUserResponseDto
             {
                 Id = user.UserId,
