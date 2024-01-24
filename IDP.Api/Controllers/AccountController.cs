@@ -13,11 +13,9 @@ namespace IDP.Api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IConfiguration _config;
-        private readonly IMediator _mediator;
-        public AccountController(IConfiguration config, IMediator mediator)
+        public AccountController(IConfiguration config)
         {
             _config = config;
-            _mediator = mediator;
         }
         [HttpPost]
         public IActionResult Post(string UserName, string Password)
@@ -44,12 +42,5 @@ namespace IDP.Api.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult Post(UserDto user)
-        {
-            AddUserComand send = new AddUserComand(user);
-           var result =  _mediator.Send(send);
-            return Ok(result);
-        }
     }
 }
