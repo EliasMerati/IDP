@@ -1,4 +1,5 @@
 ﻿using IDP.Application.Users.Comand;
+using IDP.Application.Users.Query;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,14 @@ namespace IDP.Api.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            GetAllUsersQuery send = new GetAllUsersQuery();
+            var result = _mediator.Send(send);
+            return Ok(result);
+        }
+
         [HttpPost]
         public IActionResult Post(UserDto user)
         {
@@ -26,6 +35,14 @@ namespace IDP.Api.Controllers
         public IActionResult Put(UserDto user)
         {
             EditUserCommand send = new EditUserCommand(user);
+            var result = _mediator.Send(send);
+            return Ok(result);
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            DeleteUserComand send = new DeleteUserComand(id);
             var result = _mediator.Send(send);
             return Ok(result);
         }
