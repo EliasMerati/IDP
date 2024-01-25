@@ -1,12 +1,14 @@
 ﻿using IDP.Application.Users.Comand;
 using IDP.Application.Users.Query;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IDP.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;

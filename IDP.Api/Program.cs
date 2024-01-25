@@ -1,4 +1,4 @@
-using IDP.Application.Users.Comand;
+﻿using IDP.Application.Users.Comand;
 using IDP.Persistence.Context;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+#nullable disable
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -25,11 +25,11 @@ builder.Services.AddAuthentication(op =>
             ValidIssuer = builder.Configuration["JwtConfig:issuer"],
             ValidAudience = builder.Configuration["JwtConfig:audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:key"])),
-            ValidateIssuerSigningKey = true,
-            ValidateLifetime = true
+            ValidateIssuerSigningKey = true, // ==> چک کردن امضا
+            ValidateLifetime = true // ==> استفاده از توکن با زمان معتبر
 
         };
-        ConfigureOptions.SaveToken = true; // HttpContext.GetTokenAsync();
+        ConfigureOptions.SaveToken = true;     // ==> HttpContext.GetTokenAsync(); => بدست آوردن توکن در کنترلر ها برای استفاده از توکن
     }); 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

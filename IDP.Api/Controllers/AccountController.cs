@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 namespace IDP.Api.Controllers
 {
+#nullable disable
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -34,10 +35,10 @@ namespace IDP.Api.Controllers
                 string key = _config["JwtConfig:key"];
                 var secretkey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(key));
                 var credential = new SigningCredentials(secretkey, SecurityAlgorithms.HmacSha256);
-                var token = new JwtSecurityToken(issuer: "elias merati"
-                    , audience: "any"
+                var token = new JwtSecurityToken(issuer: _config["JwtConfig:issuer"]
+                    , audience: _config["JwtConfig:audience"]
                     , notBefore: DateTime.Now
-                    , expires: DateTime.Now.AddMinutes(5)
+                    , expires: DateTime.Now.AddMinutes(int.Parse(_config["JwtConfig:expires"]))
                     , claims: claims
                     , signingCredentials: credential
                     );
