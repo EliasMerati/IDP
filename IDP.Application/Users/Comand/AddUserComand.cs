@@ -14,6 +14,7 @@ namespace IDP.Application.Users.Comand
         public int UserAge { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        public bool IsActive { get; set; }
     }
 
     public class AddUserComand : IRequest<AddUserResponseDto>
@@ -43,6 +44,7 @@ namespace IDP.Application.Users.Comand
                 UserAge = request.User.UserAge,
                 UserName = request.User.UserName,
                 CreateDate = DateTime.Now,
+                IsActive = true,
             };
 
             var connectionstring = _configuration.GetConnectionString("IDPConnectionString");

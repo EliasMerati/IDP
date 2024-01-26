@@ -10,5 +10,6 @@ namespace IDP.Persistence.Context
                 
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserToken> UserTokens { get; set; }
     }
 }
