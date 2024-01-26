@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using IDP.Application.Users.Comand;
+using IDP.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,8 +22,9 @@ namespace IDP.Api.Controllers
             _config = config;
         }
         [HttpPost]
-        public IActionResult Post(string UserName, string Password)
+        public IActionResult Post(string UserName, string Password , int Id)
         {
+
             if (true)
             {
 

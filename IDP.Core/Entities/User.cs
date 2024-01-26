@@ -25,4 +25,7 @@ public class User
     public DateTime CreateDate { get; set; } = DateTime.Now;
 
     public bool IsActive { get; set; } = true;
+
+
+    public ICollection<UserToken> UserTokens { get; set; } 
 }
