@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using IDP.Common.Security;
 using IDP.Core.Entities;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +17,7 @@ namespace IDP.Application.Users.Comand
         public string Password { get; set; }
         public bool IsActive { get; set; }
     }
+
 
     public class AddUserComand : IRequest<AddUserResponseDto>
     {
@@ -46,9 +48,9 @@ namespace IDP.Application.Users.Comand
                 CreateDate = DateTime.Now,
                 IsActive = true,
             };
-
             var connectionstring = _configuration.GetConnectionString("IDPConnectionString");
             var sql = "INSERT INTO USERS(FullName,UserAge,UserName,Password,CreateDate) VALUES (@fullname,@userage,@username,@password , @createdate)";
+
             var con = new SqlConnection(connectionstring);
             con.Execute(sql, new { user.FullName, user.UserAge, user.UserName, user.Password , user.CreateDate });
             return await Task.FromResult(new AddUserResponseDto

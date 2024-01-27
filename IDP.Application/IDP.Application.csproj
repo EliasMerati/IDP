@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IDP.Common\IDP.Common.csproj" />
     <ProjectReference Include="..\IDP.Core\IDP.Core.csproj" />
   </ItemGroup>
 
