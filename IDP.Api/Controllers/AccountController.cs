@@ -1,13 +1,8 @@
-﻿using Dapper;
-using IDP.Application.Users.Comand;
-using IDP.Common.Security;
+﻿using IDP.Common.Security;
 using IDP.Core.Entities;
 using IDP.Persistence.Context;
-using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -20,16 +15,16 @@ namespace IDP.Api.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IDPContext _db;
-        public AccountController(IConfiguration config , IDPContext db)
+        public AccountController(IConfiguration config, IDPContext db)
         {
             _config = config;
             _db = db;
         }
         [HttpPost]
-        public IActionResult Post(string UserName, string Password , int Id)
+        public IActionResult Post(string UserName, string Password, int Id)
         {
-            var user = _db.Users.FirstOrDefault(u=> u.UserId == Id);
-            bool existUser = _db.Users.Any(u=>u.UserName == UserName && u.Password == Password && u.IsActive);
+            var user = _db.Users.FirstOrDefault(u => u.UserId == Id);
+            bool existUser = _db.Users.Any(u => u.UserName == UserName && u.Password == Password && u.IsActive);
 
             if (existUser)
             {
@@ -52,6 +47,7 @@ namespace IDP.Api.Controllers
                 var jwttoken = new JwtSecurityTokenHandler().WriteToken(token);
                 var userToken = new UserToken()
                 {
+                    UserId = user.UserId,
                     Token = HashHelper.CreateHash(jwttoken),
                     TokenExpire = expiretoken
                 };

@@ -8,7 +8,6 @@ namespace IDP.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -26,6 +25,7 @@ namespace IDP.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Post(UserDto user)
         {
             AddUserComand send = new AddUserComand(user);
@@ -34,6 +34,7 @@ namespace IDP.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public IActionResult Put(UserDto user)
         {
             EditUserCommand send = new EditUserCommand(user);
@@ -42,6 +43,7 @@ namespace IDP.Api.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public IActionResult Delete(int id)
         {
             DeleteUserComand send = new DeleteUserComand(id);
