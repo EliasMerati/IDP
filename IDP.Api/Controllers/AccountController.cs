@@ -23,7 +23,7 @@ namespace IDP.Api.Controllers
         [HttpPost]
         public IActionResult Post(string UserName, string Password, int Id)
         {
-            var user = _db.Users.FirstOrDefault(u => u.UserId == Id);
+            var user = _db.Users.Find(Id);
             bool existUser = _db.Users.Any(u => u.UserName == UserName && u.Password == Password && u.IsActive);
 
             if (existUser)
