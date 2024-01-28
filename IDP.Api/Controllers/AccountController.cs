@@ -1,4 +1,5 @@
-﻿using IDP.Common.Security;
+﻿using IDP.Application.Context;
+using IDP.Common.Security;
 using IDP.Core.Entities;
 using IDP.Persistence.Context;
 using Microsoft.AspNetCore.Mvc;
@@ -14,8 +15,8 @@ namespace IDP.Api.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IConfiguration _config;
-        private readonly IDPContext _db;
-        public AccountController(IConfiguration config, IDPContext db)
+        private readonly IIDPContext _db;
+        public AccountController(IConfiguration config, IIDPContext db)
         {
             _config = config;
             _db = db;

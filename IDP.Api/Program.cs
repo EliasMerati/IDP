@@ -1,4 +1,5 @@
-﻿using IDP.Application.Users.Comand;
+﻿using IDP.Application.Context;
+using IDP.Application.Users.Comand;
 using IDP.Persistence.Context;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IIDPContext, IDPContext>();
+builder.Services.AddScoped<IMongoDbContext<T>, MongoDbContext<T>>();
 builder.Services.AddDbContext<IDPContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("IDPConnectionString")));
 builder.Services.AddAuthentication(op => 
 {
