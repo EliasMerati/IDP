@@ -12,16 +12,23 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+#region IOC
 builder.Services.AddScoped<IIDPContext, IDPContext>();
-builder.Services.AddScoped<IMongoDbContext<T>, MongoDbContext<T>>();
+builder.Services.AddScoped(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
+#endregion
+
+#region Context
 builder.Services.AddDbContext<IDPContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("IDPConnectionString")));
-builder.Services.AddAuthentication(op => 
+#endregion
+
+#region JWT Config
+builder.Services.AddAuthentication(op =>
 {
     op.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
     op.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     op.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-    .AddJwtBearer(ConfigureOptions => 
+    .AddJwtBearer(ConfigureOptions =>
     {
         ConfigureOptions.TokenValidationParameters = new TokenValidationParameters()
         {
@@ -33,12 +40,18 @@ builder.Services.AddAuthentication(op =>
 
         };
         ConfigureOptions.SaveToken = true;     // ==> HttpContext.GetTokenAsync(); => بدست آوردن توکن در کنترلر ها برای استفاده از توکن
-    }); 
+    });
+#endregion
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(AddUserComand).Assembly));
+
+#region MediatR Config Assembly
+builder.Services.AddMediatR((typeof(AddUserComand).Assembly));
+#endregion
+
+#region Middlewares
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,3 +68,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+#endregion
