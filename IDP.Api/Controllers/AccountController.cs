@@ -1,8 +1,9 @@
 ﻿using IDP.Application.Context;
+using IDP.Application.LogRepository;
 using IDP.Common.Security;
 using IDP.Core.Entities;
-using IDP.Persistence.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -16,10 +17,12 @@ namespace IDP.Api.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IIDPContext _db;
-        public AccountController(IConfiguration config, IIDPContext db)
+        private readonly ILogRepository _log;
+        public AccountController(IConfiguration config, IIDPContext db,ILogRepository log)
         {
             _config = config;
             _db = db;
+            _log = log;
         }
         [HttpPost]
         public IActionResult Post(string UserName, string Password, int Id)
@@ -54,10 +57,13 @@ namespace IDP.Api.Controllers
                 };
                 _db.UserTokens.AddAsync(userToken);
                 _db.SaveChangesAsync();
+
+                _log.execute(new LogInfo {Message = "Create JWT" });
                 return Ok(jwttoken);
             }
             else
             {
+                _log.execute(new LogInfo { Message = "Not Create JWT" });
                 return NotFound();
             }
         }

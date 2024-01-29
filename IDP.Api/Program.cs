@@ -1,10 +1,12 @@
 ﻿using IDP.Application.Context;
+using IDP.Application.LogRepository;
 using IDP.Application.Users.Comand;
 using IDP.Persistence.Context;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using NLog.Web;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 #region IOC
 builder.Services.AddScoped<IIDPContext, IDPContext>();
+builder.Services.AddScoped<ILogRepository, LogRipository>();
 builder.Services.AddScoped(typeof(IMongoDbContext<>), typeof(MongoDbContext<>));
 #endregion
 
