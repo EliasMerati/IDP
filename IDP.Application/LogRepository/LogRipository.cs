@@ -18,7 +18,6 @@ namespace IDP.Application.LogRepository
         {
             _logs.InsertOne(new LogInfo
             {
-                id = log.id,
                 Message = log.Message,
             });
         }
